@@ -20,11 +20,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.treinamento.cleanarch.core.entity.BairroEntity;
-import br.com.treinamento.cleanarch.core.entity.CidadeEntity;
-import br.com.treinamento.cleanarch.core.entity.ClienteEntity;
-import br.com.treinamento.cleanarch.core.entity.EnderecoEntity;
-import br.com.treinamento.cleanarch.core.entity.EstadoEntity;
+import br.com.treinamento.cleanarch.core.domain.Bairro;
+import br.com.treinamento.cleanarch.core.domain.Cidade;
+import br.com.treinamento.cleanarch.core.domain.Cliente;
+import br.com.treinamento.cleanarch.core.domain.Endereco;
+import br.com.treinamento.cleanarch.core.domain.Estado;
 import br.com.treinamento.cleanarch.core.usecase.CadastrarClienteUseCase;
 import br.com.treinamento.cleanarch.entrypoint.entity.ClienteRequestHttpModel;
 import br.com.treinamento.cleanarch.entrypoint.entity.EnderecoRequestHttpModel;
@@ -56,24 +56,24 @@ public class ClienteEntrypointTest {
 			.enderecos(enderecos)
 			.build();
 		
-		List<EnderecoEntity> enderecosEntity = new ArrayList<>();
-		enderecosEntity.add(EnderecoEntity.builder()
+		List<Endereco> enderecosEntity = new ArrayList<>();
+		enderecosEntity.add(Endereco.builder()
 				.id(1L)
-				.bairro(BairroEntity.builder()
+				.bairro(Bairro.builder()
 						.id(1L)
-						.cidade(CidadeEntity.builder()
-								.estado(EstadoEntity.builder().id(1L).build())
+						.cidade(Cidade.builder()
+								.estado(Estado.builder().id(1L).build())
 						.build())
 				.build())
 		.build());
 		
-		ClienteEntity clienteEntity = ClienteEntity.builder()
+		Cliente cliente = Cliente.builder()
 			.id(1L)
 			.nome("Matheus")
 			.enderecos(enderecosEntity)
 			.build();
 
-		Mockito.when(clienteUseCase.cadastrarCliente(Mockito.any(ClienteEntity.class))).thenReturn(clienteEntity);
+		Mockito.when(clienteUseCase.cadastrarCliente(Mockito.any(Cliente.class))).thenReturn(cliente);
 		
 		this.mockMvc.perform(
 			MockMvcRequestBuilders

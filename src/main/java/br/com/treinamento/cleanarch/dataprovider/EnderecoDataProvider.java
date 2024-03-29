@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.treinamento.cleanarch.configuration.exception.DataBaseException;
-import br.com.treinamento.cleanarch.core.entity.EnderecoEntity;
-import br.com.treinamento.cleanarch.core.gateway.EnderecoGateway;
+import br.com.treinamento.cleanarch.core.domain.Endereco;
+import br.com.treinamento.cleanarch.gateway.EnderecoGateway;
 import br.com.treinamento.cleanarch.dataprovider.entity.BairroTable;
 import br.com.treinamento.cleanarch.dataprovider.entity.CidadeTable;
 import br.com.treinamento.cleanarch.dataprovider.entity.EnderecoTable;
@@ -32,7 +32,7 @@ public class EnderecoDataProvider implements EnderecoGateway {
 	private EstadoRepository estadoRepository;
 	
 	@Override
-	public EnderecoEntity cadastrarEndereco(EnderecoEntity entity) {
+	public Endereco cadastrarEndereco(Endereco entity) {
 		try {			
 			EnderecoTable enderecoTable = EnderecoTableMapper.to(entity);
 			EstadoTable estadoTable = enderecoTable.getBairro().getCidade().getEstado();
@@ -53,9 +53,9 @@ public class EnderecoDataProvider implements EnderecoGateway {
 		}
 	}
 
-    public List<EnderecoEntity> buscarEndereco(Integer cep){
+    public List<Endereco> buscarEndereco(Integer cep){
         try{
-            List<EnderecoEntity> listaEntity = new ArrayList<>();
+            List<Endereco> listaEntity = new ArrayList<>();
             List<EnderecoTable> listaTable = new ArrayList<>();
 
             listaTable = enderecoRepository.findByCep(cep);

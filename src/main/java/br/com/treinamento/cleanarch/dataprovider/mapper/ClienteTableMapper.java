@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.treinamento.cleanarch.core.entity.ClienteEntity;
-import br.com.treinamento.cleanarch.core.entity.EnderecoEntity;
+import br.com.treinamento.cleanarch.core.domain.Cliente;
+import br.com.treinamento.cleanarch.core.domain.Endereco;
 import br.com.treinamento.cleanarch.dataprovider.entity.ClienteTable;
 import br.com.treinamento.cleanarch.dataprovider.entity.EnderecoTable;
 
 public class ClienteTableMapper {
-    public static ClienteTable to(ClienteEntity entity){
+    public static ClienteTable to(Cliente entity){
         return Optional.ofNullable(entity).map(cliente -> ClienteTable.builder()
                 .id(cliente.getId())
                 .nome(cliente.getNome())
@@ -23,10 +23,10 @@ public class ClienteTableMapper {
             .orElse(ClienteTable.builder().build());
     }
 
-    private static List<EnderecoTable> toEnderecos(List<EnderecoEntity> enderecos){
+    private static List<EnderecoTable> toEnderecos(List<Endereco> enderecos){
         List<EnderecoTable> listaEnderecos = new ArrayList<>();
 
-        for(EnderecoEntity endereco : enderecos){
+        for(Endereco endereco : enderecos){
             listaEnderecos.add(EnderecoTableMapper.to(endereco));
         }
 
@@ -39,8 +39,8 @@ public class ClienteTableMapper {
 
      */
 
-    public static ClienteEntity from(ClienteTable table){
-        return Optional.ofNullable(table).map(cliente -> ClienteEntity.builder()
+    public static Cliente from(ClienteTable table){
+        return Optional.ofNullable(table).map(cliente -> Cliente.builder()
                 .id(cliente.getId())
                 .nome(cliente.getNome())
                 .telefone(cliente.getTelefone())
@@ -49,11 +49,11 @@ public class ClienteTableMapper {
                 .email(cliente.getEmail())
                 .dataNascimento(cliente.getDataNascimento())
             .build())
-            .orElse(ClienteEntity.builder().build());
+            .orElse(Cliente.builder().build());
     }
 
-    private static List<EnderecoEntity> fromEnderecos(List<EnderecoTable> enderecos){
-        List<EnderecoEntity> listaEnderecos = new ArrayList<>();
+    private static List<Endereco> fromEnderecos(List<EnderecoTable> enderecos){
+        List<Endereco> listaEnderecos = new ArrayList<>();
 
         for(EnderecoTable endereco : enderecos){
             listaEnderecos.add(EnderecoTableMapper.from(endereco));

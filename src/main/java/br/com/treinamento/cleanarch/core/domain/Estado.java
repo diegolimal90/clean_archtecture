@@ -1,4 +1,4 @@
-package br.com.treinamento.cleanarch.core.entity;
+package br.com.treinamento.cleanarch.core.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BairroEntity {
-    
+public class Estado {
     private Long id;
 
     private String nome;
-
-    private CidadeEntity cidade;
 }

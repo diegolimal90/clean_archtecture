@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.treinamento.cleanarch.core.entity.ClienteEntity;
-import br.com.treinamento.cleanarch.core.entity.EnderecoEntity;
+import br.com.treinamento.cleanarch.core.domain.Cliente;
+import br.com.treinamento.cleanarch.core.domain.Endereco;
 import br.com.treinamento.cleanarch.entrypoint.entity.ClienteRequestHttpModel;
 import br.com.treinamento.cleanarch.entrypoint.entity.EnderecoRequestHttpModel;
 
 public class ClienteRequestHttpModelMapper {
-    public static ClienteRequestHttpModel to(ClienteEntity entity){
+    public static ClienteRequestHttpModel to(Cliente entity){
         return Optional.ofNullable(entity).map(cliente -> ClienteRequestHttpModel.builder()
                 .nomeCliente(cliente.getNome())
                 .telefoneCliente(cliente.getTelefone())
@@ -22,19 +22,19 @@ public class ClienteRequestHttpModelMapper {
             .orElse(ClienteRequestHttpModel.builder().build());
     }
 
-    private static List<EnderecoRequestHttpModel> toEnderecos(List<EnderecoEntity> enderecosCliente){
+    private static List<EnderecoRequestHttpModel> toEnderecos(List<Endereco> enderecosCliente){
         List<EnderecoRequestHttpModel> listaEnderecos = new ArrayList<>();
 
-        for(EnderecoEntity endereco : enderecosCliente){
+        for(Endereco endereco : enderecosCliente){
             listaEnderecos.add(EnderecoRequestHttpModelMapper.to(endereco));
         }
 
         return listaEnderecos;
     }
 
-    public static ClienteEntity from(ClienteRequestHttpModel httpModel){
+    public static Cliente from(ClienteRequestHttpModel httpModel){
         return Optional.ofNullable(httpModel).map(cliente -> 
-            ClienteEntity.builder()
+            Cliente.builder()
                 .nome(cliente.getNomeCliente())
                 .telefone(cliente.getTelefoneCliente())
                 .enderecos(fromEnderecos(cliente.getEnderecos()))
@@ -42,11 +42,11 @@ public class ClienteRequestHttpModelMapper {
                 .email(cliente.getEmailCliente())
                 .dataNascimento(cliente.getDataNascimento())
             .build())
-            .orElse(ClienteEntity.builder().build());
+            .orElse(Cliente.builder().build());
     }
 
-    private static List<EnderecoEntity> fromEnderecos(List<EnderecoRequestHttpModel> enderecosCliente){
-        List<EnderecoEntity> listaEnderecos = new ArrayList<>();
+    private static List<Endereco> fromEnderecos(List<EnderecoRequestHttpModel> enderecosCliente){
+        List<Endereco> listaEnderecos = new ArrayList<>();
 
         for(EnderecoRequestHttpModel endereco : enderecosCliente){
             listaEnderecos.add(EnderecoRequestHttpModelMapper.from(endereco));

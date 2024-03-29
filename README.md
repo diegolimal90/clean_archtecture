@@ -1,6 +1,6 @@
 # Treinamento com Clean Architecture
 
-Treinamento inicial sobre Clean Architecture em aplicação Spring Boot, todas as camadas possuem sua propria documentação e classes reais para se usar de exemplo nos seus estudos.
+Treinamento inicial Clean Architecture em aplicação Spring Boot, todas as camadas possuem sua propria documentação e classes reais para se usar de exemplo nos seus estudos.
 
 <p align="center">
   <img alt="Java 1.8" src="https://img.shields.io/static/v1?logo=java&label=Java&message=1.8&color=blue&style=flat-square">
@@ -10,11 +10,9 @@ Treinamento inicial sobre Clean Architecture em aplicação Spring Boot, todas a
 
 ## Estrutura de pastas
 
-Treinamento em andamento, alguns links não funcionam pois não existem por enquanto.
-
 - [Core](src/main/java/br/com/treinamento/cleanarch/core)
-  - [Entity](src/main/java/br/com/treinamento/cleanarch/core/entity)
-  - [Gateway](src/main/java/br/com/treinamento/cleanarch/core/gateway)
+  - [Entity](src/main/java/br/com/treinamento/cleanarch/core/domain)
+  - [Gateway](src/main/java/br/com/treinamento/cleanarch/gateway)
   - [Usecase](src/main/java/br/com/treinamento/cleanarch/core/usecase)
 - [DataProvider](src/main/java/br/com/treinamento/cleanarch/dataprovider)
   - [Entity](src/main/java/br/com/treinamento/cleanarch/dataprovider/entity)
@@ -29,6 +27,8 @@ Treinamento em andamento, alguns links não funcionam pois não existem por enqu
 - [Resources](/src/main/resources)
   - [Configuração da Aplicação](/src/main/resources)
 - [Tests](/src/test/java/br/com/treinamento/)
+  - [CORE](/src/test/java/br/com/treinamento/cleanarch/core/)
+    - [USECASE](/src/test/java/br/com/treinamento/cleanarch/core/usecase)
   - [DataProvider](/src/test/java/br/com/treinamento/cleanarch/dataprovider/)
   - [Entrypoint](/src/test/java/br/com/treinamento/cleanarch/entrypoint/)
 

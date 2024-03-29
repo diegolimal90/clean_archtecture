@@ -12,11 +12,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import br.com.treinamento.cleanarch.core.entity.BairroEntity;
-import br.com.treinamento.cleanarch.core.entity.CidadeEntity;
-import br.com.treinamento.cleanarch.core.entity.ClienteEntity;
-import br.com.treinamento.cleanarch.core.entity.EnderecoEntity;
-import br.com.treinamento.cleanarch.core.entity.EstadoEntity;
+import br.com.treinamento.cleanarch.core.domain.Bairro;
+import br.com.treinamento.cleanarch.core.domain.Cidade;
+import br.com.treinamento.cleanarch.core.domain.Cliente;
+import br.com.treinamento.cleanarch.core.domain.Endereco;
+import br.com.treinamento.cleanarch.core.domain.Estado;
 import br.com.treinamento.cleanarch.dataprovider.ClienteDataProvider;
 import br.com.treinamento.cleanarch.dataprovider.EnderecoDataProvider;
 
@@ -35,59 +35,59 @@ public class CadastrarClienteUseCaseTest {
     @Test
     public void cadastrarClienteUseCase_success_with_feign() {
     	
-    	List<EnderecoEntity> enderecosFeign = new ArrayList<>();
-    	enderecosFeign.add(EnderecoEntity.builder()
+    	List<Endereco> enderecosFeign = new ArrayList<>();
+    	enderecosFeign.add(Endereco.builder()
     			.id(1L)
     			.cep(111)
-				.bairro(BairroEntity.builder()
+				.bairro(Bairro.builder()
 						.id(1L)
-						.cidade(CidadeEntity.builder()
+						.cidade(Cidade.builder()
 								.id(1L)
-								.estado(EstadoEntity.builder().id(1L).build())
+								.estado(Estado.builder().id(1L).build())
 						.build())
 				.build())
 		.build());
     	
     	
-    	List<EnderecoEntity> enderecosSalvo = new ArrayList<>();
-    	enderecosSalvo.add(EnderecoEntity.builder()
+    	List<Endereco> enderecosSalvo = new ArrayList<>();
+    	enderecosSalvo.add(Endereco.builder()
     			.id(1L)
     			.cep(111)
-				.bairro(BairroEntity.builder()
+				.bairro(Bairro.builder()
 						.id(1L)
-						.cidade(CidadeEntity.builder()
+						.cidade(Cidade.builder()
 								.id(1L)
-								.estado(EstadoEntity.builder().id(1L).build())
+								.estado(Estado.builder().id(1L).build())
 						.build())
 				.build())
 		.build());
     	
-    	List<EnderecoEntity> enderecosNovo = new ArrayList<>();
-    	enderecosNovo.add(EnderecoEntity.builder()
+    	List<Endereco> enderecosNovo = new ArrayList<>();
+    	enderecosNovo.add(Endereco.builder()
     			.cep(111)
-				.bairro(BairroEntity.builder()
-						.cidade(CidadeEntity.builder()
-								.estado(EstadoEntity.builder().build())
+				.bairro(Bairro.builder()
+						.cidade(Cidade.builder()
+								.estado(Estado.builder().build())
 						.build())
 				.build())
 		.build());
     	
-    	ClienteEntity clienteTeste = ClienteEntity.builder()
+    	Cliente clienteTeste = Cliente.builder()
     			.nome("Ricardo")
     			.enderecos(enderecosNovo)
     			.build();
     	
-    	ClienteEntity clienteSalvo = ClienteEntity.builder()
+    	Cliente clienteSalvo = Cliente.builder()
     			.id(1L)
     			.nome("Ricardo")
     			.enderecos(enderecosSalvo)
     			.build();
     	
     	Mockito.when(enderecoDataprovider.buscarEndereco(Mockito.anyInt())).thenReturn(enderecosFeign);
-    	Mockito.when(enderecoDataprovider.cadastrarEndereco(Mockito.any(EnderecoEntity.class))).thenReturn(enderecosSalvo.get(0));
-    	Mockito.when(clienteDataprovider.cadastrarCliente(Mockito.any(ClienteEntity.class))).thenReturn(clienteSalvo);
+    	Mockito.when(enderecoDataprovider.cadastrarEndereco(Mockito.any(Endereco.class))).thenReturn(enderecosSalvo.get(0));
+    	Mockito.when(clienteDataprovider.cadastrarCliente(Mockito.any(Cliente.class))).thenReturn(clienteSalvo);
     	
-    	ClienteEntity response = clienteUseCase.cadastrarCliente(clienteTeste);
+    	Cliente response = clienteUseCase.cadastrarCliente(clienteTeste);
     	
     	Assert.assertThat(response.getId(), Matchers.notNullValue());
     }
@@ -95,45 +95,45 @@ public class CadastrarClienteUseCaseTest {
     @Test
     public void cadastrarClienteUseCase_success_empty_feign() {
     	
-    	List<EnderecoEntity> enderecosSalvo = new ArrayList<>();
-    	enderecosSalvo.add(EnderecoEntity.builder()
+    	List<Endereco> enderecosSalvo = new ArrayList<>();
+    	enderecosSalvo.add(Endereco.builder()
     			.id(1L)
     			.cep(111)
-				.bairro(BairroEntity.builder()
+				.bairro(Bairro.builder()
 						.id(1L)
-						.cidade(CidadeEntity.builder()
+						.cidade(Cidade.builder()
 								.id(1L)
-								.estado(EstadoEntity.builder().id(1L).build())
+								.estado(Estado.builder().id(1L).build())
 						.build())
 				.build())
 		.build());
     	
-    	List<EnderecoEntity> enderecosNovo = new ArrayList<>();
-    	enderecosNovo.add(EnderecoEntity.builder()
+    	List<Endereco> enderecosNovo = new ArrayList<>();
+    	enderecosNovo.add(Endereco.builder()
     			.cep(111)
-				.bairro(BairroEntity.builder()
-						.cidade(CidadeEntity.builder()
-								.estado(EstadoEntity.builder().build())
+				.bairro(Bairro.builder()
+						.cidade(Cidade.builder()
+								.estado(Estado.builder().build())
 						.build())
 				.build())
 		.build());
     	
-    	ClienteEntity clienteTeste = ClienteEntity.builder()
+    	Cliente clienteTeste = Cliente.builder()
     			.nome("Ricardo")
     			.enderecos(enderecosNovo)
     			.build();
     	
-    	ClienteEntity clienteSalvo = ClienteEntity.builder()
+    	Cliente clienteSalvo = Cliente.builder()
     			.id(1L)
     			.nome("Ricardo")
     			.enderecos(enderecosSalvo)
     			.build();
     	
     	Mockito.when(enderecoDataprovider.buscarEndereco(Mockito.anyInt())).thenReturn(new ArrayList<>());
-    	Mockito.when(enderecoDataprovider.cadastrarEndereco(Mockito.any(EnderecoEntity.class))).thenReturn(enderecosNovo.get(0));
-    	Mockito.when(clienteDataprovider.cadastrarCliente(Mockito.any(ClienteEntity.class))).thenReturn(clienteSalvo);
+    	Mockito.when(enderecoDataprovider.cadastrarEndereco(Mockito.any(Endereco.class))).thenReturn(enderecosNovo.get(0));
+    	Mockito.when(clienteDataprovider.cadastrarCliente(Mockito.any(Cliente.class))).thenReturn(clienteSalvo);
     	
-    	ClienteEntity response = clienteUseCase.cadastrarCliente(clienteTeste);
+    	Cliente response = clienteUseCase.cadastrarCliente(clienteTeste);
     	
     	Assert.assertThat(response.getId(), Matchers.notNullValue());
     }

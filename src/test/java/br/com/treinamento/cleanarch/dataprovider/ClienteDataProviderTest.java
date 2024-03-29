@@ -13,11 +13,11 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import br.com.treinamento.cleanarch.configuration.exception.DataBaseException;
-import br.com.treinamento.cleanarch.core.entity.BairroEntity;
-import br.com.treinamento.cleanarch.core.entity.CidadeEntity;
-import br.com.treinamento.cleanarch.core.entity.ClienteEntity;
-import br.com.treinamento.cleanarch.core.entity.EnderecoEntity;
-import br.com.treinamento.cleanarch.core.entity.EstadoEntity;
+import br.com.treinamento.cleanarch.core.domain.Bairro;
+import br.com.treinamento.cleanarch.core.domain.Cidade;
+import br.com.treinamento.cleanarch.core.domain.Cliente;
+import br.com.treinamento.cleanarch.core.domain.Endereco;
+import br.com.treinamento.cleanarch.core.domain.Estado;
 import br.com.treinamento.cleanarch.dataprovider.entity.BairroTable;
 import br.com.treinamento.cleanarch.dataprovider.entity.CidadeTable;
 import br.com.treinamento.cleanarch.dataprovider.entity.ClienteTable;
@@ -74,23 +74,23 @@ public class ClienteDataProviderTest {
 				.build();
 		
 		// Lista de endereços que será associada ao clienteEntity
-		List<EnderecoEntity> enderecosEntity = new ArrayList<>();
-		enderecosEntity.add(EnderecoEntity.builder()
-				.bairro(BairroEntity.builder()
-						.cidade(CidadeEntity.builder()
-								.estado(EstadoEntity.builder().build())
+		List<Endereco> enderecosEntity = new ArrayList<>();
+		enderecosEntity.add(Endereco.builder()
+				.bairro(Bairro.builder()
+						.cidade(Cidade.builder()
+								.estado(Estado.builder().build())
 						.build())
 				.build())
 		.build());
 		
-		ClienteEntity entity = ClienteEntity.builder()
+		Cliente entity = Cliente.builder()
 				.nome("Victor")
 				.enderecos(enderecosEntity)
 				.build();
 		
 		Mockito.when(clienteRepository.save(cliente)).thenReturn(clienteSalvo);
 		
-		ClienteEntity response = clienteDataProvider.cadastrarCliente(entity);
+		Cliente response = clienteDataProvider.cadastrarCliente(entity);
 		
 		Assert.assertThat(response.getId(), Matchers.notNullValue());
 	}
@@ -99,7 +99,7 @@ public class ClienteDataProviderTest {
 	public void cadastrarCliente_dataBaseException() {
 		
 		// Enviando um cliente que não possui uma lista de endereços, para forçar a exception
-		ClienteEntity entity = ClienteEntity.builder()
+		Cliente entity = Cliente.builder()
 				.nome("Victor")
 				.build();
 		

@@ -2,14 +2,14 @@ package br.com.treinamento.cleanarch.entrypoint.mapper;
 
 import java.util.Optional;
 
-import br.com.treinamento.cleanarch.core.entity.BairroEntity;
-import br.com.treinamento.cleanarch.core.entity.CidadeEntity;
-import br.com.treinamento.cleanarch.core.entity.EnderecoEntity;
-import br.com.treinamento.cleanarch.core.entity.EstadoEntity;
+import br.com.treinamento.cleanarch.core.domain.Bairro;
+import br.com.treinamento.cleanarch.core.domain.Cidade;
+import br.com.treinamento.cleanarch.core.domain.Endereco;
+import br.com.treinamento.cleanarch.core.domain.Estado;
 import br.com.treinamento.cleanarch.entrypoint.entity.EnderecoRequestHttpModel;
 
 public class EnderecoRequestHttpModelMapper {
-    public static EnderecoRequestHttpModel to(EnderecoEntity entity){
+    public static EnderecoRequestHttpModel to(Endereco entity){
         return Optional.ofNullable(entity).map(endereco -> 
             EnderecoRequestHttpModel.builder()
                 .logradouro(endereco.getLogradouro())
@@ -22,29 +22,29 @@ public class EnderecoRequestHttpModelMapper {
             .orElse(EnderecoRequestHttpModel.builder().build());
     }
 
-    public static EnderecoEntity from(EnderecoRequestHttpModel httpModel){
+    public static Endereco from(EnderecoRequestHttpModel httpModel){
         return Optional.ofNullable(httpModel).map(endereco -> 
-            EnderecoEntity.builder()
+            Endereco.builder()
                 .logradouro(endereco.getLogradouro())
                 .numero(endereco.getNumero())
                 .cep(endereco.getCep())
                 .bairro(
-                    BairroEntity.builder()
+                    Bairro.builder()
                         .nome(endereco.getBairro())
                         .cidade(
-                            CidadeEntity.builder()
+                            Cidade.builder()
                                 .nome(endereco.getCidade())
                                 .estado(
-                                    EstadoEntity.builder()
+                                    Estado.builder()
                                         .nome(endereco.getEstado())
                                     .build())
                             .build())
                     .build())
             .build())
-            .orElse(EnderecoEntity.builder()
-                        .bairro(BairroEntity.builder()
-                            .cidade(CidadeEntity.builder()
-                                .estado(EstadoEntity.builder().build())
+            .orElse(Endereco.builder()
+                        .bairro(Bairro.builder()
+                            .cidade(Cidade.builder()
+                                .estado(Estado.builder().build())
                             .build())
                         .build())
                     .build());

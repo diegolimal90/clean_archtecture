@@ -1,4 +1,4 @@
-package br.com.treinamento.cleanarch.core.entity;
+package br.com.treinamento.cleanarch.core.domain;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClienteEntity {
+public class Cliente {
     
     private Long id;
 
@@ -20,7 +20,7 @@ public class ClienteEntity {
 
     private String telefone;
 
-    private List<EnderecoEntity> enderecos;
+    private List<Endereco> enderecos;
 
     private Integer documento;
 

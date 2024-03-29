@@ -13,10 +13,10 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import br.com.treinamento.cleanarch.configuration.exception.DataBaseException;
-import br.com.treinamento.cleanarch.core.entity.BairroEntity;
-import br.com.treinamento.cleanarch.core.entity.CidadeEntity;
-import br.com.treinamento.cleanarch.core.entity.EnderecoEntity;
-import br.com.treinamento.cleanarch.core.entity.EstadoEntity;
+import br.com.treinamento.cleanarch.core.domain.Bairro;
+import br.com.treinamento.cleanarch.core.domain.Cidade;
+import br.com.treinamento.cleanarch.core.domain.Endereco;
+import br.com.treinamento.cleanarch.core.domain.Estado;
 import br.com.treinamento.cleanarch.dataprovider.entity.BairroTable;
 import br.com.treinamento.cleanarch.dataprovider.entity.CidadeTable;
 import br.com.treinamento.cleanarch.dataprovider.entity.EnderecoTable;
@@ -44,10 +44,10 @@ public class EnderecoDataProviderTest {
 	@Test
 	public void cadastrarEndereco_success() {
 		
-		EnderecoEntity enderecoEntity = EnderecoEntity.builder()
-				.bairro(BairroEntity.builder()
-						.cidade(CidadeEntity.builder()
-								.estado(EstadoEntity.builder().build())
+		Endereco endereco = Endereco.builder()
+				.bairro(Bairro.builder()
+						.cidade(Cidade.builder()
+								.estado(Estado.builder().build())
 						.build())
 				.build())
 		.build();
@@ -68,7 +68,7 @@ public class EnderecoDataProviderTest {
 		Mockito.when(bairroRepository.save(Mockito.any(BairroTable.class))).thenReturn(new BairroTable());
 		Mockito.when(enderecoRepository.save(Mockito.any(EnderecoTable.class))).thenReturn(enderecoTable);
 		
-		EnderecoEntity response = enderecoDataProvider.cadastrarEndereco(enderecoEntity);
+		Endereco response = enderecoDataProvider.cadastrarEndereco(endereco);
 		
 		Assert.assertThat(response.getId(), Matchers.notNullValue());
 	}
@@ -76,7 +76,7 @@ public class EnderecoDataProviderTest {
 	@Test(expected = DataBaseException.class)
 	public void cadastrarEndereco_exception() {
 		
-		EnderecoEntity endereco = EnderecoEntity.builder()
+		Endereco endereco = Endereco.builder()
 				.logradouro("endereco")
 				.build();
 		
@@ -101,7 +101,7 @@ public class EnderecoDataProviderTest {
         
         Mockito.when(enderecoRepository.findByCep(Mockito.anyInt())).thenReturn(listaTable);
         
-        List<EnderecoEntity> listaResponse = enderecoDataProvider.buscarEndereco(123456);
+        List<Endereco> listaResponse = enderecoDataProvider.buscarEndereco(123456);
         
         Assert.assertThat(listaResponse.size(), Matchers.notNullValue());
 	}
